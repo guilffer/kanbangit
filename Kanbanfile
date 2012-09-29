@@ -1,1 +1,1 @@
-statuses = ['todo', 'doing', 'done']
+columns = ['todo', 'doing', 'done']
