@@ -1,21 +1,20 @@
 require 'item'
 
 class Kanban
-  
+
   attr_accessor :items, :columns
-  
+
   def initialize
     @items = []
     @columns = ['todo', 'doing', 'done']
   end
-  
+
   def load_items_from_fs!
-    files = Dir.entries(ENV['ITEMS_PATH']).select{|file| file.end_with? ".yml"}
-    files.each do |file| 
-      @items << Item.new(file.sub('.yml',''))
+    Dir.entries(ENV['ITEMS_PATH']).each do |file|
+      @items << Item.new(file.sub('.yml','')) if file.end_with? ".yml"
     end
   end
-  
+
   def pretty_print
     @columns.inject('') do |out, column|
       out << "[#{column}]\n"
@@ -25,5 +24,5 @@ class Kanban
       out << "\n"
     end
   end
-  
+
 end
