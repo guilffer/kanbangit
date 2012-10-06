@@ -16,7 +16,7 @@ describe "#item" do
   end
 
   it "is associated to a .yml file" do 
-    File.exists?(ENV['ITEMS_PATH']+'nome.yml').should eq(true)
+    File.exists?(ENV['ITEMS_PATH']+'nome.yml').should be_true
   end
 
   it "should start at kanban's first column" do
