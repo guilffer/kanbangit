@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'kanbangit'
+puts kanbangit.app(ARGV)

@@ -1,11 +1,11 @@
 require 'helper'
-require 'kanban'
-require 'item'
+require 'kanbangit/kanban'
+require 'kanbangit/item'
 
 describe "#kanban" do
 
   before(:each) do
-    @kanban = Kanban.new
+    @kanban =Kanban.new
     @item1 = Item.new "item1"
     @item2 = Item.new "item2"
   end

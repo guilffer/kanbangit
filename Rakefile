@@ -1,8 +1,8 @@
 require 'rspec/core/rake_task'
 
 require 'fileutils'
-require 'kanban'
-require 'item'
+require 'kanbangit/kanban'
+require 'kanbangit/item'
 
 ENV['ITEMS_PATH'] = '.kanban/items/'
 
@@ -12,13 +12,13 @@ task :default => :spec
 
 namespace :kanban do
   task :list => :create_items_path do
-    kanban = Kanban.new
+    kanban = Kanbangit::Kanban.new
     kanban.load_items_from_fs!
     puts kanban.pretty_print
   end
 
   task :add_item => :create_items_path do
-    Item.new ENV['name']
+    Kanbangit::Item.new ENV['name']
   end
 
   task :create_items_path do

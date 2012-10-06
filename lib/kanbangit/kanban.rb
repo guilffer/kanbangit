@@ -1,4 +1,4 @@
-require 'item'
+require 'kanbangit/item'
 
 class Kanban
 

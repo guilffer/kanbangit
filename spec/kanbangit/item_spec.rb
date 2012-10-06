@@ -1,4 +1,4 @@
-require 'item'
+require 'kanbangit/item'
 require 'helper'
 
 describe "#item" do
