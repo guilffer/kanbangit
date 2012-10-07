@@ -1,28 +1,28 @@
 require 'helper'
+require 'kanbangit/environment'
 require 'kanbangit/kanban'
 require 'kanbangit/item'
 
-describe "#kanban" do
+describe Kanbangit::Kanban do
 
-  before(:each) do
-    @kanban =Kanban.new
-    @item1 = Item.new "item1"
-    @item2 = Item.new "item2"
-  end
-
+  let(:env) {Kanbangit::Environment.new('/')}
+  let(:instance) { described_class.new env }
+  let!(:item1) { Kanbangit::Item.new("item1",env) }
+  let!(:item2) { Kanbangit::Item.new("item2",env) }
+  
   it "should have a list of items" do
-    @kanban.items << @item1
-    @kanban.items << @item2
+    instance.items << item1
+    instance.items << item2
 
-    @kanban.items.should eq([@item1, @item2])
+    instance.items.should eq([item1, item2])
   end
 
   it "should load items from FS" do
-    @kanban.load_items_from_fs!
+    instance.load_items_from_fs!
 
-    @kanban.items.size.should eq(2)
-    @kanban.items[0].name.should eq(@item1.name)
-    @kanban.items[1].name.should eq(@item2.name)
+    instance.items.size.should eq(2)
+    instance.items[0].name.should eq(item1.name)
+    instance.items[1].name.should eq(item2.name)
   end
 
   it "should show the items in a pretty way" do
@@ -34,9 +34,9 @@ describe "#kanban" do
     expected << "\n"
     expected << "[done]\n"
     expected << "\n"
-
-    @kanban.load_items_from_fs!
-    @kanban.pretty_print.should eq(expected)
+  
+    instance.load_items_from_fs!
+    instance.pretty_print.should eq(expected)
   end
 
 end

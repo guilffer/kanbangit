@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'kanbangit'
-puts kanbangit.app(ARGV)
+require 'kanbangit/environment'
+
+argv = ARGV.empty? ? ['list'] : ARGV
+
+env = Kanbangit::Environment.new
+puts env.cli(argv)

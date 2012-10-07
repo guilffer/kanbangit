@@ -1,40 +1,37 @@
 require 'kanbangit/item'
+require 'kanbangit/environment'
 require 'helper'
 
-describe "#item" do
+describe Kanbangit::Item do
 
-  before(:each) do 
-    @item = Item.new 'nome'
-  end
-
-  after(:each) do 
-    FileUtils.rm(ENV['ITEMS_PATH']+'nome.yml')
-  end
+  let(:env) {Kanbangit::Environment.new('/')}
+  let!(:instance) {described_class.new('nome', env)}
+  after(:each) { FileUtils.rm(instance.itemfile_path) }
 
   it "has a attribute name" do
-    @item.name.should eq('nome')
+    instance.name.should eq('nome')
   end
 
   it "is associated to a .yml file" do 
-    File.exists?(ENV['ITEMS_PATH']+'nome.yml').should be_true
+    File.exists?(instance.itemfile_path).should be_true
   end
 
   it "should start at kanban's first column" do
-    @item.column.should eq('todo')
+    instance.column.should eq('todo')
   end
 
   it "'s file should have the currrent column infomation" do 
-    item_file = YAML.load_file ENV['ITEMS_PATH']+'nome.yml'
+    item_file = YAML.load_file instance.itemfile_path
     item_file['column'].should eq('todo')
   end
 
   it "'s file should not be rewrote if it already exists" do 
-    file_path = ENV['ITEMS_PATH']+'doing_item.yml'
+    file_path = File.join(env.items_path,'doing_item.yml')
     File.open file_path, 'w' do |file|
       file.write({'column'=>'doing'}.to_yaml)
     end
 
-    item = Item.new 'doing_item'
+    item = Kanbangit::Item.new('doing_item', env)
 
     item_file = YAML.load_file file_path
     item_file['column'].should eq('doing')
@@ -43,12 +40,12 @@ describe "#item" do
   end
 
   it "should load the file information if it already exists" do 
-    file_path = ENV['ITEMS_PATH']+'doing_item.yml'
+    file_path = File.join(env.items_path,'doing_item.yml')
     File.open file_path, 'w' do |file|
       file.write({'column'=>'doing'}.to_yaml)
     end
 
-    item = Item.new 'doing_item'
+    item = Kanbangit::Item.new('doing_item',env)
 
     item.column.should eq('doing')
 
