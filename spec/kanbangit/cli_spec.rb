@@ -5,54 +5,44 @@ require 'kanbangit/cli'
 describe Kanbangit::Command::Init do
   let(:env) { Kanbangit::Environment.new } 
   let(:instance) { described_class.new([], env) }
+  subject { instance.execute.to_s }
   
-  context 'when the items_path does not exist in the file system' do
-    it 'should create the path' do 
-      instance.execute
-      Dir.exists?(env.items_path).should be_true
-    end
+  context 'when items_path does not exist' do
+    it { should == File.expand_path(env.items_path) }
   end
   
-  context 'when the items_path already exists in the file system' do
-    it 'should notify the user' do 
-      FileUtils.mkdir_p env.items_path
-      instance.execute.should eq('Already a kanbangit repository')
-    end
+  context 'when items_path already exists' do
+    before { FileUtils.mkdir_p env.items_path }
+    it { should == 'Already a kanbangit repository' }
   end
 end
 
 describe Kanbangit::Command::Add do
   let(:env) { Kanbangit::Environment.new }
   let(:instance) { described_class.new(['nome'], env) }
+  subject { instance.execute }
   
-  context 'when there is no items_path in the file system' do
-    it 'should notify the user' do
-      instance.execute.should eq('Not a kanbangit repository')
-    end
+  context 'when items_path does not exist' do
+    it { should == 'Not a kanbangit repository' }
   end
 
-  context 'when the items_path already exists in the file system' do
-    it "should add items to the kanban" do 
-      FileUtils.mkdir_p env.items_path
-      instance.execute.should eq('nome added to column todo')
-    end
+  context 'when items_path already exists' do
+    before { FileUtils.mkdir_p env.items_path }
+    it { should == 'nome added to column todo' }
   end
 end
 
 describe Kanbangit::Command::List do
   let(:env) { Kanbangit::Environment.new }
   let(:instance) { described_class.new([], env) }
+  subject { instance.execute }
   
-  context 'when there is no items_path in the file system' do
-    it 'should notify the user' do 
-      instance.execute.should eq('Not a kanbangit repository')
-    end
+  context 'when items_path does not exist' do
+    it { should == 'Not a kanbangit repository' }
   end
   
-  context 'when the items_path already exists in the file system' do
-    it "should list all the items under the kanban in a pretty way" do
-      FileUtils.mkdir_p env.items_path
-      instance.execute.should eq("[todo]\n\n[doing]\n\n[done]\n\n")
-    end
+  context 'when items_path already exists' do
+    before { FileUtils.mkdir_p env.items_path }
+    it { should == "[todo]\n\n[doing]\n\n[done]\n\n" }
   end
 end

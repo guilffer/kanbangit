@@ -10,14 +10,14 @@ describe Kanbangit::Kanban do
   let!(:item1) { Kanbangit::Item.new("item1",env) }
   let!(:item2) { Kanbangit::Item.new("item2",env) }
   
-  it "should have a list of items" do
+  it "has a list of items" do
     instance.items << item1
     instance.items << item2
 
     instance.items.should eq([item1, item2])
   end
 
-  it "should load items from FS" do
+  it "loads items from file system" do
     instance.load_items_from_fs!
 
     instance.items.size.should eq(2)
@@ -25,7 +25,7 @@ describe Kanbangit::Kanban do
     instance.items[1].name.should eq(item2.name)
   end
 
-  it "should show the items in a pretty way" do
+  it "shows the items in a pretty way" do
     expected  = "[todo]\n"
     expected << "- item1\n"
     expected << "- item2\n"

@@ -2,10 +2,9 @@ require 'helper'
 require 'kanbangit/environment'
 
 describe Kanbangit::Environment do
-  let(:instance) {described_class.new}  
+  let(:instance) {described_class.new 'items/path'}  
   
-  it "have the items directory path" do 
-    instance.items_path.should eq('.kanban/items')
+  it "knows where to put the itemfiles" do 
+    instance.items_path.should eq('items/path')
   end
-  
 end

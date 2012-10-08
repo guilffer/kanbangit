@@ -1,4 +1,5 @@
-require 'kanbangit'
+require 'kanbangit/item'
+require 'kanbangit/kanban'
 
 module Kanbangit
   class CLI
@@ -26,10 +27,10 @@ module Kanbangit
     
     class Init < Command
       def execute
-        if Dir.exists? @env.items_path
-          "Already a kanbangit repository"
-        else
+        unless Dir.exists? @env.items_path
           FileUtils.mkdir_p @env.items_path
+        else
+          "Already a kanbangit repository"
         end
       end
     end
