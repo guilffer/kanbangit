@@ -38,5 +38,5 @@ describe Kanbangit::Kanban do
     instance.load_items_from_fs!
     instance.pretty_print.should eq(expected)
   end
-
+  
 end
