@@ -1,5 +1,3 @@
-$:.unshift File.expand_path("../lib", __FILE__)
-
 Gem::Specification.new do |s|
   s.name          = "kanbangit"
   s.version       = "0.0.1"

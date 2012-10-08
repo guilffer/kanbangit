@@ -39,4 +39,16 @@ describe Kanbangit::Kanban do
     instance.pretty_print.should eq(expected)
   end
   
+  describe '.forward' do
+    it 'moves item1 to the doing column' do
+      instance.forward item1
+      item1.column.should == instance.columns[1]
+    end
+    
+    it "knows that the last column is trully the last column" do
+      item1.update :column, instance.columns.last
+      instance.forward item1
+      item1.column.should == instance.columns.last
+    end
+  end
 end

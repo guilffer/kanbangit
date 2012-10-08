@@ -27,5 +27,12 @@ module Kanbangit
       end
     end
     
+    def forward(item)
+      if @columns.last != item.column
+        next_column = @columns[@columns.index(item.column)+1]
+        item.update :column, next_column
+      end
+    end
+    
   end
 end

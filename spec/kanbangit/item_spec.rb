@@ -40,5 +40,18 @@ describe Kanbangit::Item do
       item.column.should == 'doing'
     end
   end
+  
+  describe ".update" do
+    it "update the item data" do 
+      instance.update :column, "done"
+      instance.column.should == "done"
+    end
+    
+    it "update the itemfile" do 
+      instance.update :column, "done"
+      item_file = YAML.load_file instance.itemfile_path
+      item_file['column'].should == 'done'
+    end
+  end
 
 end
