@@ -1,3 +1,3 @@
-# Kanbangit
+# Kanbangit.
 
 :shipit:
